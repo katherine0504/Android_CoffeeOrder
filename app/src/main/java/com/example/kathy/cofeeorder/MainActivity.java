@@ -2,7 +2,9 @@ package com.example.kathy.cofeeorder;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import java.text.NumberFormat;
 
@@ -18,7 +20,9 @@ public class MainActivity extends AppCompatActivity {
     public int price = 5;
 
     public void submitOrder(View view) {
-        String priceMessage = "Total: $" + numberOfCoffee*price + "\nThank you!";
+        CheckBox whippedCheckBox = (CheckBox) findViewById(R.id.whipped);
+        boolean hasWhippedCream = whippedCheckBox.isChecked();
+        String priceMessage = createOrderSummary(numberOfCoffee*price, hasWhippedCream);
         displayMessage(priceMessage);
     }
 
@@ -26,11 +30,6 @@ public class MainActivity extends AppCompatActivity {
         TextView quantityTextView = (TextView) findViewById(
                 R.id.quantity_text_view);
         quantityTextView.setText("" + number);
-    }
-
-    private void displayPrice(int number) {
-        TextView priceTextView = (TextView) findViewById(R.id.price_text_view);
-        priceTextView.setText(NumberFormat.getCurrencyInstance().format(number));
     }
 
     public void displayIncrement(View view) {
@@ -48,6 +47,16 @@ public class MainActivity extends AppCompatActivity {
     private void displayMessage(String message) {
         TextView priceTextView = (TextView) findViewById(R.id.price_text_view);
         priceTextView.setText(message);
+    }
+
+    private String createOrderSummary (int price, boolean addWhippedCream) {
+        String priceMessage = "Name : Kathy";
+        priceMessage += "\nAdd whipped Cream : " + addWhippedCream;
+        priceMessage += "\nQuantity : " + numberOfCoffee;
+        priceMessage += "\nTotal : $" + price;
+        priceMessage += "\nThank You!!";
+
+        return priceMessage;
     }
 
 
